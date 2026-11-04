@@ -1,16 +1,12 @@
-"""E-commerce Sales Analysis | Beginner-friendly, professional project."""
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
-
-# Keep paths relative to this project, so it runs from any working directory.
 PROJECT_FOLDER = Path(__file__).resolve().parent
 DATA_FILE = PROJECT_FOLDER / "data" / "sales_data.csv"
 CHART_FOLDER = PROJECT_FOLDER / "visualizations"
 OUTPUT_FOLDER = PROJECT_FOLDER / "outputs"
 CHART_FOLDER.mkdir(exist_ok=True)
 OUTPUT_FOLDER.mkdir(exist_ok=True)
-
 
 def load_and_clean_data(file_path):
     """Read the CSV, validate columns, and remove invalid/duplicate records."""
@@ -24,7 +20,7 @@ def load_and_clean_data(file_path):
     if missing_columns:
         raise ValueError(f"Dataset is missing columns: {missing_columns}")
 
-    # Convert values into useful data types.
+
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     for column in ["Quantity", "Price", "Total_Sales"]:
         df[column] = pd.to_numeric(df[column], errors="coerce")
@@ -42,7 +38,6 @@ def load_and_clean_data(file_path):
 
 
 def analyze_sales(df):
-    """Create summary tables, charts, and a few descriptive business insights."""
     product_sales = (df.groupby("Product", as_index=False)["Total_Sales"].sum()
                      .sort_values("Total_Sales", ascending=False))
     monthly_sales = (df.groupby("Month", as_index=False)["Total_Sales"].sum()
